@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:autofit="http://schemas.android.com/apk/res-auto"
+    xmlns:app="popu"
+    tools:context="com.example.moviereviewer.ui.MainActivity"
+    android:orientation="vertical"
+    android:padding="0dp"
+    android:background="@drawable/bg2"
+    android:weightSum="1">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="57dp"
+        android:padding="5dp"
+        android:gravity="center_horizontal">
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/search"
+            android:layout_weight="0.14"
+            android:background="@color/common_google_signin_btn_text_dark_default"
+            android:layout_margin="5dp"
+            android:paddingLeft="10dp"
+            android:hint="Search"
+            tools:ignore="HardcodedText,RtlHardcoded,RtlSymmetry" />
+
+        <ImageButton
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            autofit:srcCompat="@drawable/searchw"
+            android:id="@+id/imageButton"
+            android:layout_weight="0.01" />
+
+    </LinearLayout>
+
+    <android.support.v7.widget.ContentFrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="145dp"
+        android:layout_weight="0.48"
+        android:layout_gravity="center_horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            autofit:srcCompat="@drawable/close"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/test"
+            android:adjustViewBounds="true"/>
+
+        <View
+            android:layout_width="358dp"
+            android:layout_height="40dp"
+            android:background="@drawable/gradient"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
+            android:layout_gravity="bottom" />
+
+    </android.support.v7.widget.ContentFrameLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:weightSum="1"
+        android:layout_weight="0.83">
+
+        <android.support.v7.widget.RecyclerView
+        android:id="@+id/rec_list"
+        android:layout_height="345dp"
+        android:layout_width="match_parent"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
+            android:layout_weight="0.68" />
+    </LinearLayout>
+
+
+</LinearLayout>
