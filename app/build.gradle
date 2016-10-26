@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.moviereviewer"
-        minSdkVersion 21
+        minSdkVersion 15
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
@@ -21,19 +21,25 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
     compile 'com.android.support:appcompat-v7:24.2.0'
     compile 'com.android.support:recyclerview-v7:24.2.0'
     compile 'com.google.code.findbugs:jsr305:2.0.1'
-    testCompile 'junit:junit:4.12'
+
 
     /*Firebase*/
-    compile 'com.google.firebase:firebase-auth:9.2.0'
+    compile 'com.google.firebase:firebase-auth:9.6.1'
+    compile 'com.google.firebase:firebase-database:9.6.0'
+
 
     /*autofittextview*/
     compile 'me.grantland:autofittextview:0.2.+'
 
     /*Glide*/
     compile 'com.github.bumptech.glide:glide:3.7.0'
+    testCompile 'junit:junit:4.12'
 }
 /*firebase*/
 apply plugin: 'com.google.gms.google-services'

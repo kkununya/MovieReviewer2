@@ -1,11 +1,9 @@
 package com.example.moviereviewer.ui;
 
 import android.content.Intent;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,12 +14,16 @@ import com.bumptech.glide.Glide;
 import com.example.moviereviewer.R;
 import com.example.moviereviewer.adapter.ListAdapter;
 import com.example.moviereviewer.model.ListData;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity{
 
     private RecyclerView recView;
     private ListAdapter adapter;
     private Intent i;
+
+    //firebase auth object
+    private FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,17 +49,19 @@ public class MainActivity extends AppCompatActivity{
 
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){
-            case R.id.login:
-                i = new Intent(getApplicationContext(), Login_Activity.class);
+            case R.id.profile:
+                finish();
+                i = new Intent(getApplicationContext(), Profile_show_Activity.class);
                 startActivity(i);
                 return true;
-            case R.id.register:
-                i = new Intent(getApplicationContext(), Register_main_Activity.class);
-                startActivity(i);
+            case R.id.logout:
+                startActivity(new Intent(this, Login_Activity.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
+
+
 
 }

@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "1031680734354-m4psbv3jvp4qkkkrk55ia4o4ck39rvg8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.moviereviewer",
+            "certificate_hash": "A4CB4F5E2FFA088F9EE0D49982DFDFC809132205"
+          }
+        },
+        {
           "client_id": "1031680734354-8v0cc2so8tvscre55q9k6979qmb3tkgt.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,8 +37,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1031680734354-8v0cc2so8tvscre55q9k6979qmb3tkgt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2

@@ -11,16 +11,20 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.MainActivity">
+        <activity android:name=".test.testActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.Login_Activity" />
+        <activity android:name=".ui.MainActivity" />
         <activity android:name=".ui.Register_Activity" />
+        <activity android:name=".ui.Profile_Activity" />
         <activity android:name=".ui.Register_main_Activity" />
+        <activity android:name=".ui.Profile_show_Activity" />
+        <activity android:name=".test.ProfileActivity" />
+        <activity android:name=".test.SignUpActivity"></activity>
     </application>
 
 </manifest>

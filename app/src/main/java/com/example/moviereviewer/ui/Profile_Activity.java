@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.moviereviewer.R;
@@ -15,27 +14,23 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class Register_Activity extends AppCompatActivity implements View.OnClickListener {
+public class Profile_Activity extends AppCompatActivity implements View.OnClickListener {
 
     //firebase auth object
     private FirebaseAuth firebaseAuth;
-
-    //view objects
-    private TextView textViewUserEmail;
-    private Button buttonLogout;
 
     //defining a database reference
     private DatabaseReference databaseReference;
 
     //our new views
-    private EditText editTextName, editTextAddress;
-    private Button buttonSave;
+    private EditText editUserName, editFirstName, editLastName;
+    private Button buttonSave, buttonback;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.register);
+        setContentView(R.layout.profile_page);
 
         //initializing firebase authentication object
         firebaseAuth = FirebaseAuth.getInstance();
@@ -54,33 +49,25 @@ public class Register_Activity extends AppCompatActivity implements View.OnClick
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
         //getting the views from xml resource
-        editTextAddress = (EditText) findViewById(R.id.editTextAddress);
-        editTextName = (EditText) findViewById(R.id.editTextName);
-        buttonSave = (Button) findViewById(R.id.buttonSave);
+        editUserName = (EditText) findViewById(R.id.username);
+        editFirstName = (EditText) findViewById(R.id.fn);
+        editLastName = (EditText) findViewById(R.id.ln);
+        buttonSave = (Button) findViewById(R.id.save);
+        buttonback = (Button) findViewById(R.id.back);
 
-
-        FirebaseUser user = firebaseAuth.getCurrentUser();
-
-        //initializing views
-        textViewUserEmail = (TextView) findViewById(R.id.textViewUserEmail);
-        buttonLogout = (Button) findViewById(R.id.buttonLogout);
-
-        //displaying logged in user name
-        textViewUserEmail.setText("Welcome " + user.getEmail());
-
-        //adding listener to button
-        buttonLogout.setOnClickListener(this);
         buttonSave.setOnClickListener(this);
+        buttonback.setOnClickListener(this);
     }
 
 
     private void saveUserInformation() {
         //Getting values from database
-        String name = editTextName.getText().toString().trim();
-        String add = editTextAddress.getText().toString().trim();
+        String name = editUserName.getText().toString().trim();
+        String first = editFirstName.getText().toString().trim();
+        String last = editLastName.getText().toString().trim();
 
         //creating a userinformation object
-        user userInformation = new user(name, add);
+        UserInformation userInformation = new UserInformation(name, first, last);
 
         //getting the current logged in user
         FirebaseUser user = firebaseAuth.getCurrentUser();
@@ -90,22 +77,16 @@ public class Register_Activity extends AppCompatActivity implements View.OnClick
 
         //displaying a success toast
         Toast.makeText(this, "Information Saved...", Toast.LENGTH_LONG).show();
+        startActivity(new Intent(getApplicationContext(), MainActivity.class));
     }
 
     @Override
     public void onClick(View view) {
-        //if logout is pressed
-        if (view == buttonLogout) {
-            //logging out the user
-            firebaseAuth.signOut();
-            //closing activity
-            finish();
-            //starting login activity
-            startActivity(new Intent(this, Login_Activity.class));
-        }
-
         if(view == buttonSave){
             saveUserInformation();
+        }
+        if(view == buttonback){
+            startActivity(new Intent(getApplicationContext(), MainActivity.class));
         }
 
     }
