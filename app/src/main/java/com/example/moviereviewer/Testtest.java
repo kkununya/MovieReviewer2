@@ -5,4 +5,5 @@ package com.example.moviereviewer;
  */
 
 public class Testtest {
+    String a = "Hello World";
 }
