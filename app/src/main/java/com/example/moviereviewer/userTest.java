@@ -1,25 +1,23 @@
-package com.example.moviereviewer.ui;
+package com.example.moviereviewer;
 
 /**
- * Created by Cereal on 10/24/2016.
+ * Created by Cereal on 10/27/2016.
  */
 
-public class user {
+public class userTest {
 
     private String name;
     private String first;
     private String last;
-    private String birthday;
 
-    public user(){
+    public userTest(){
 
     }
 
-    public user(String name, String first, String last, String birthday) {
+    public userTest(String name, String first, String last) {
         this.setName(name);
         this.setFirst(first);
         this.setLast(last);
-        this.setBirthday(birthday);
     }
 
     public String getName() {
@@ -44,13 +42,5 @@ public class user {
 
     public void setLast(String last) {
         this.last = last;
-    }
-
-    public String getBirthday() {
-        return birthday;
-    }
-
-    public void setBirthday(String birthday) {
-        this.birthday = birthday;
     }
 }

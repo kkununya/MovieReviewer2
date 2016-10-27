@@ -2,9 +2,9 @@ package com.example.moviereviewer.ui;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -20,7 +20,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class Login_Activity extends AppCompatActivity implements View.OnClickListener {
 
-
+    private static final String TAG = "User";
     //defining views
     private Button buttonLogIn;
     private EditText editTextEmail;
@@ -44,12 +44,12 @@ public class Login_Activity extends AppCompatActivity implements View.OnClickLis
 
         //if the objects getcurrentuser method is not null
         //means user is already logged in
-        /*if(firebaseAuth.getCurrentUser() != null){
+        if(firebaseAuth.getCurrentUser() != null){
             //close this activity
             finish();
             //opening profile activity
             startActivity(new Intent(getApplicationContext(), MainActivity.class));
-        }*/
+        }
 
         //initializing views
         editTextEmail = (EditText) findViewById(R.id.email);
@@ -118,4 +118,6 @@ public class Login_Activity extends AppCompatActivity implements View.OnClickLis
             startActivity(new Intent(this, Register_main_Activity.class));
         }
     }
+
+
 }

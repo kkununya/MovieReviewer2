@@ -80,7 +80,7 @@ public class Register_Activity extends AppCompatActivity implements View.OnClick
         String add = editTextAddress.getText().toString().trim();
 
         //creating a userinformation object
-        user userInformation = new user(name, add);
+        user userInformation = new user(name, add, add, add);
 
         //getting the current logged in user
         FirebaseUser user = firebaseAuth.getCurrentUser();

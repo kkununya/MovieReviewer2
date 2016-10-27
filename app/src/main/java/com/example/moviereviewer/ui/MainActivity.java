@@ -15,6 +15,7 @@ import com.example.moviereviewer.R;
 import com.example.moviereviewer.adapter.ListAdapter;
 import com.example.moviereviewer.model.ListData;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity{
 
@@ -29,6 +30,17 @@ public class MainActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        firebaseAuth = FirebaseAuth.getInstance();
+
+        //if the objects getcurrentuser method is not null
+        //means user is already logged in
+        /*if(firebaseAuth.getCurrentUser() != null){
+            //close this activity
+            finish();
+            //opening profile activity
+            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+        }*/
+
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         recView = (RecyclerView)findViewById(R.id.rec_list);
@@ -36,6 +48,9 @@ public class MainActivity extends AppCompatActivity{
 
         adapter = new ListAdapter(ListData.getListData(), this);
         recView.setAdapter(adapter);
+
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        System.out.println("Provider ID 5555555555555 : " + user.getUid());
 
         ImageView img = (ImageView)findViewById(R.id.test);
         Glide.with(this).load("https://firebasestorage.googleapis.com/v0/b/moviereviewer-34f20.appspot.com/o/image%2Fsuicide_squad_cover.jpg?alt=media&token=b8c806b4-fc56-4050-a13c-505a63c46985").into(img);
@@ -55,13 +70,15 @@ public class MainActivity extends AppCompatActivity{
                 startActivity(i);
                 return true;
             case R.id.logout:
-                startActivity(new Intent(this, Login_Activity.class));
+                firebaseAuth.signOut();
+                finish();
+                i = new Intent(getApplicationContext(), Login_Activity.class);
+                startActivity(i);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
-
 
 
 }

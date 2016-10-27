@@ -5,17 +5,15 @@ import android.widget.Toast;
 
 public class Helper {
 
-    public static final String NAME = "Name";
+    public static final String NAME = "name";
 
-    public static final String EMAIL = "Email";
+    public static final String EMAIL = "email";
 
-    public static final String BIRTHDAY = "Birthday";
+    public static final String FIRST = "first";
 
-    public static final String PHONE_NUMBER = "Phone Number";
+    public static final String LAST = "last";
 
-    public static final String HOBBY_INTEREST = "Hobby & Interest";
-
-    public static final int SELECT_PICTURE = 2000;
+    public static final String BIRTHDAY = "birthday";
 
     public static boolean isValidEmail(String email){
         if(email.contains("@")){

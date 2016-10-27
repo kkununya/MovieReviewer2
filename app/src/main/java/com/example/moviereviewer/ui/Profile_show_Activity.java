@@ -1,39 +1,26 @@
 package com.example.moviereviewer.ui;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.moviereviewer.R;
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.Query;
+import com.firebase.client.ValueEventListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
-public class Profile_show_Activity extends AppCompatActivity implements View.OnClickListener {
+public class Profile_show_Activity extends AppCompatActivity{
 
     //firebase auth object
     private FirebaseAuth firebaseAuth;
 
-    //view objects
-    private TextView textViewUserEmail, username;
-
-    //defining a database reference
-    private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-    private DatabaseReference mConditionRef = databaseReference.child("name");
-
-    //our new views
-    private EditText editUserName, editFirstName, editLastName;
-    private Button buttonSave, buttonback, buttonLogout;
-
+    private Firebase ref;
+    private Query qRef;
+    private TextView textName, textFirst, textLast, textBirthday;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +29,44 @@ public class Profile_show_Activity extends AppCompatActivity implements View.OnC
 
         //initializing firebase authentication object
         firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser userAuth = firebaseAuth.getCurrentUser();
+
+        textName = (TextView) findViewById(R.id.name);
+        textFirst = (TextView) findViewById(R.id.fn);
+        textLast = (TextView) findViewById(R.id.ln);
+        textBirthday = (TextView) findViewById(R.id.birthday);
+
+        Firebase.setAndroidContext(this);
+        ref = new Firebase("https://moviereviewer-34f20.firebaseio.com/User/"+userAuth.getUid()+"/name");
+
+        qRef = ref.orderByChild("name");
+
+        qRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                System.out.println("data : 555555555555555555555555555555555555 : " + dataSnapshot.getValue().toString());
+                /*for (DataSnapshot msg : dataSnapshot.getChildren()) {
+
+                    FirebaseUser userAuth = firebaseAuth.getCurrentUser();
+                    // Retrieve all data from FireBase using QueryUtility
+                    user userInfo = QueryUtility.extractUser(msg, userAuth.getUid());
+                    setTextView(userInfo);
+
+                }*/
+                textName.setText(dataSnapshot.getValue().toString());
+
+
+
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+
+
+
 
 
         //if the user is not logged in
@@ -53,87 +78,17 @@ public class Profile_show_Activity extends AppCompatActivity implements View.OnC
             startActivity(new Intent(this, Login_Activity.class));
         }*/
 
-        //getting the database reference
-        //databaseReference = FirebaseDatabase.getInstance().getReference();
 
-        //getting the views from xml resource
-        editUserName = (EditText) findViewById(R.id.username);
-        editFirstName = (EditText) findViewById(R.id.fn);
-        editLastName = (EditText) findViewById(R.id.ln);
-        buttonSave = (Button) findViewById(R.id.save);
-        buttonback = (Button) findViewById(R.id.back);
-        buttonLogout = (Button) findViewById(R.id.logout);
-
-        FirebaseUser user = firebaseAuth.getCurrentUser();
-
-        //initializing views
-        textViewUserEmail = (TextView) findViewById(R.id.textView4);
-
-        username = (TextView) findViewById(R.id.textView4);
-
-        //displaying logged in user name
-        //textViewUserEmail.setText(user.getEmail());
-
-        //adding listener to button
-        buttonSave.setOnClickListener(this);
-        buttonback.setOnClickListener(this);
-        buttonLogout.setOnClickListener(this);
     }
 
-    protected void onStart(){
+    private void setTextView(user userInfo){
+        textName.setText(userInfo.getName());
+        textFirst.setText(userInfo.getFirst());
+        textLast.setText(userInfo.getLast());
+        textBirthday.setText(userInfo.getBirthday());
+    }
+
+    public void onStart(){
         super.onStart();
-
-        mConditionRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String text = dataSnapshot.getValue(String.class);
-                username.setText(text);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-    }
-
-    private void saveUserInformation() {
-        //Getting values from database
-        String name = editUserName.getText().toString().trim();
-        String first = editFirstName.getText().toString().trim();
-        String last = editLastName.getText().toString().trim();
-
-        //creating a userinformation object
-        UserInformation userInformation = new UserInformation(name, first, last);
-
-        //getting the current logged in user
-        FirebaseUser user = firebaseAuth.getCurrentUser();
-
-
-        databaseReference.child(user.getUid()).setValue(userInformation);
-
-        //displaying a success toast
-        Toast.makeText(this, "Information Saved...", Toast.LENGTH_LONG).show();
-        startActivity(new Intent(getApplicationContext(), MainActivity.class));
-    }
-
-    @Override
-    public void onClick(View view) {
-        if(view == buttonSave){
-            saveUserInformation();
-        }
-        if(view == buttonback){
-            finish();
-            startActivity(new Intent(getApplicationContext(), MainActivity.class));
-        }
-        if (view == buttonLogout) {
-            //logging out the user
-            firebaseAuth.signOut();
-            //closing activity
-            finish();
-            //starting login activity
-            startActivity(new Intent(this, Login_Activity.class));
-        }
-
     }
 }
