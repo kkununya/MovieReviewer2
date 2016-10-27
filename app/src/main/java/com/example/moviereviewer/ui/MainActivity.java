@@ -5,23 +5,31 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.WindowManager;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
 import com.example.moviereviewer.R;
-import com.example.moviereviewer.adapter.ListAdapter;
-import com.example.moviereviewer.model.ListData;
+import com.example.moviereviewer.adapter.MovieAdapter;
+import com.example.moviereviewer.model.Movie;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity{
 
     private RecyclerView recView;
-    private ListAdapter adapter;
+    private MovieAdapter adapter;
     private Intent i;
+    private List<Movie> movieList;
+    private static String TAG = "MainActivity";
 
     //firebase auth object
     private FirebaseAuth firebaseAuth;
@@ -42,17 +50,31 @@ public class MainActivity extends AppCompatActivity{
         }*/
 
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-
+        movieList = new ArrayList<>();
         recView = (RecyclerView)findViewById(R.id.rec_list);
         recView.setLayoutManager(new GridLayoutManager(this, 3));
+        adapter = new MovieAdapter(movieList, this);
 
-        adapter = new ListAdapter(ListData.getListData(), this);
         recView.setAdapter(adapter);
 
-        FirebaseUser user = firebaseAuth.getCurrentUser();
+        final ImageView img = (ImageView)findViewById(R.id.test);
+        FirebaseDatabase.getInstance().getReference("movie-list").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot test: dataSnapshot.getChildren()){
+                    Log.i(TAG, "movie data get");
+                    Movie movie = test.getValue(Movie.class);
+                    Log.i(TAG, movie.getPicture());
+                    movieList.add(movie);
+                    adapter.notifyItemInserted(movieList.size()-1);
+                }
+            }
 
-        ImageView img = (ImageView)findViewById(R.id.test);
-        Glide.with(this).load("https://firebasestorage.googleapis.com/v0/b/moviereviewer-34f20.appspot.com/o/image%2Fsuicide_squad_cover.jpg?alt=media&token=b8c806b4-fc56-4050-a13c-505a63c46985").into(img);
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e(TAG, databaseError.getMessage());
+            }
+        });
     }
 
     @Override

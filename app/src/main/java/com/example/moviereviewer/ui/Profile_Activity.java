@@ -21,14 +21,14 @@ public class Profile_Activity extends AppCompatActivity implements View.OnClickL
     private FirebaseAuth firebaseAuth;
 
     //view objects
-    private TextView textViewUserEmail, username;
+    private TextView textViewUserEmail;
 
     //defining a database reference
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
     //our new views
     private EditText editUserName, editFirstName, editLastName, editDate;
-    private Button buttonSave, buttonback, buttonLogout;
+    private Button buttonSave;
 
 
     @Override
@@ -58,8 +58,6 @@ public class Profile_Activity extends AppCompatActivity implements View.OnClickL
         editLastName = (EditText) findViewById(R.id.ln);
         editDate = (EditText) findViewById(R.id.birthday);
         buttonSave = (Button) findViewById(R.id.save);
-        buttonback = (Button) findViewById(R.id.back);
-        buttonLogout = (Button) findViewById(R.id.logout);
 
         FirebaseUser user = firebaseAuth.getCurrentUser();
         //editUserName.setHint(user.getDisplayName());
@@ -67,17 +65,13 @@ public class Profile_Activity extends AppCompatActivity implements View.OnClickL
         System.out.println("Data 5555555 : " );
 
         //initializing views
-        //textViewUserEmail = (TextView) findViewById(R.id.textView4);
-
-        username = (TextView) findViewById(R.id.textView4);
+        textViewUserEmail = (TextView) findViewById(R.id.textView4);
 
         //displaying logged in user name
-        //textViewUserEmail.setText(user.getEmail());
+        textViewUserEmail.setText(user.getEmail());
 
         //adding listener to button
         buttonSave.setOnClickListener(this);
-        buttonback.setOnClickListener(this);
-        buttonLogout.setOnClickListener(this);
     }
 
     /*protected void onStart(){
@@ -124,18 +118,6 @@ public class Profile_Activity extends AppCompatActivity implements View.OnClickL
     public void onClick(View view) {
         if(view == buttonSave){
             saveUserInformation();
-        }
-        if(view == buttonback){
-            finish();
-            startActivity(new Intent(getApplicationContext(), MainActivity.class));
-        }
-        if (view == buttonLogout) {
-            //logging out the user
-            firebaseAuth.signOut();
-            //closing activity
-            finish();
-            //starting login activity
-            startActivity(new Intent(this, Login_Activity.class));
         }
 
     }

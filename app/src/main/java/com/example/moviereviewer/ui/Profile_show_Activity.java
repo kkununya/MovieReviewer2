@@ -1,7 +1,10 @@
 package com.example.moviereviewer.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.moviereviewer.R;
@@ -12,15 +15,19 @@ import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class Profile_show_Activity extends AppCompatActivity{
 
     //firebase auth object
     private FirebaseAuth firebaseAuth;
+    private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
     private Firebase ref;
     private Query qRef;
     private TextView textName, textFirst, textLast, textBirthday;
+    private Button butBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +42,8 @@ public class Profile_show_Activity extends AppCompatActivity{
         textFirst = (TextView) findViewById(R.id.fn);
         textLast = (TextView) findViewById(R.id.ln);
         textBirthday = (TextView) findViewById(R.id.birthday);
+
+        butBack = (Button) findViewById(R.id.butback);
 
         Firebase.setAndroidContext(this);
         String[] profile = {"name", "first", "last", "birthday"};
@@ -93,6 +102,14 @@ public class Profile_show_Activity extends AppCompatActivity{
             @Override
             public void onCancelled(FirebaseError firebaseError) {
 
+            }
+        });
+
+        butBack.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                finish();
             }
         });
 

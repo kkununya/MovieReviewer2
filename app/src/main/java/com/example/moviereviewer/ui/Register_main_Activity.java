@@ -89,7 +89,7 @@ public class Register_main_Activity extends AppCompatActivity implements View.On
             return;
         }
         if(TextUtils.equals(password, password2) == false){
-            Toast.makeText(this,"Password not equal",Toast.LENGTH_LONG).show();
+            Toast.makeText(this,"Password not match",Toast.LENGTH_LONG).show();
             return;
         }
 

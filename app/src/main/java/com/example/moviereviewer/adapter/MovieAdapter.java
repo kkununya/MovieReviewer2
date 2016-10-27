@@ -1,48 +1,48 @@
 package com.example.moviereviewer.adapter;
 
 import android.content.Context;
-import android.media.Image;
-import android.support.v7.view.menu.MenuView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.moviereviewer.R;
-import com.example.moviereviewer.model.ListData;
-import com.example.moviereviewer.model.ListItem;
+import com.example.moviereviewer.model.Movie;
 
 import java.util.List;
 
 /**
- * Created by kununya1996 on 10/14/2016.
+ * Created by Cereal on 10/27/2016.
  */
 
-public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListHolder> {
+public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>{
 
-    private List<ListItem> listData;
+    private List<Movie> listData;
     private LayoutInflater inflater;
+    private Context c;
 
-    public ListAdapter(List<ListItem> listData, Context c){
+    public MovieAdapter(List<Movie> listData, Context c){
         this.inflater = LayoutInflater.from(c);
         this.listData = listData;
+        this.c = c;
     }
 
-
     @Override
-    public ListHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MovieHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = inflater.inflate(R.layout.list_item, parent, false);
-        return new ListHolder(view);
+        return new MovieHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(ListHolder holder, int position) {
-        ListItem item = listData.get(position);
-        holder.title.setText(item.getTitle());
-        holder.icon.setImageResource(item.getImageResId());
+    public void onBindViewHolder(MovieHolder holder, int position) {
+        Movie item = listData.get(position);
+        holder.title.setText(item.getName());
+        Glide.with(c).load(item.getPicture()).into(holder.icon);
+
     }
 
     @Override
@@ -50,19 +50,21 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListHolder> {
         return listData.size();
     }
 
-    class ListHolder extends RecyclerView.ViewHolder{
+    class MovieHolder extends RecyclerView.ViewHolder{
 
         private TextView title;
         private ImageView icon;
         private View container;
 
-        public ListHolder(View itemView) {
+        public MovieHolder(View itemView) {
             super(itemView);
 
             title = (TextView)itemView.findViewById(R.id.textView);
-            icon = (ImageView)itemView.findViewById(R.id.imageView);
+            icon = (ImageButton)itemView.findViewById(R.id.imageView);
             container = itemView.findViewById(R.id.contain);
         }
-    }
 
+
+
+    }
 }
