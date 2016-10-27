@@ -107,7 +107,7 @@ public class Register_main_Activity extends AppCompatActivity implements View.On
                         //checking if success
                         if(task.isSuccessful() && TextUtils.equals(password, password2) == true){
                             finish();
-                            startActivity(new Intent(getApplicationContext(), Profile_show_Activity.class));
+                            startActivity(new Intent(getApplicationContext(), Profile_Activity.class));
                         }
                         else{
                             //display some message here

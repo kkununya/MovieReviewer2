@@ -37,10 +37,9 @@ public class Profile_show_Activity extends AppCompatActivity{
         textBirthday = (TextView) findViewById(R.id.birthday);
 
         Firebase.setAndroidContext(this);
-        ref = new Firebase("https://moviereviewer-34f20.firebaseio.com/User/"+userAuth.getUid()+"/name");
-
-        qRef = ref.orderByChild("name");
-
+        String[] profile = {"name", "first", "last", "birthday"};
+        ref = new Firebase("https://moviereviewer-34f20.firebaseio.com/User/"+userAuth.getUid()+"/"+profile[0]);
+        qRef = ref.orderByChild(profile[0]);
         qRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -54,16 +53,49 @@ public class Profile_show_Activity extends AppCompatActivity{
 
                 }*/
                 textName.setText(dataSnapshot.getValue().toString());
-
-
-
             }
-
             @Override
             public void onCancelled(FirebaseError firebaseError) {
 
             }
         });
+        ref = new Firebase("https://moviereviewer-34f20.firebaseio.com/User/"+userAuth.getUid()+"/"+profile[1]);
+        qRef = ref.orderByChild(profile[1]);
+        qRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                textFirst.setText(dataSnapshot.getValue().toString());
+            }
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+        ref = new Firebase("https://moviereviewer-34f20.firebaseio.com/User/"+userAuth.getUid()+"/"+profile[2]);
+        qRef = ref.orderByChild(profile[2]);
+        qRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                textLast.setText(dataSnapshot.getValue().toString());
+            }
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+        ref = new Firebase("https://moviereviewer-34f20.firebaseio.com/User/"+userAuth.getUid()+"/"+profile[3]);
+        qRef = ref.orderByChild(profile[3]);
+        qRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                textBirthday.setText(dataSnapshot.getValue().toString());
+            }
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+
 
 
 
@@ -81,12 +113,12 @@ public class Profile_show_Activity extends AppCompatActivity{
 
     }
 
-    private void setTextView(user userInfo){
+    /*private void setTextView(user userInfo){
         textName.setText(userInfo.getName());
         textFirst.setText(userInfo.getFirst());
         textLast.setText(userInfo.getLast());
         textBirthday.setText(userInfo.getBirthday());
-    }
+    }*/
 
     public void onStart(){
         super.onStart();

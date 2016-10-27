@@ -50,7 +50,6 @@ public class MainActivity extends AppCompatActivity{
         recView.setAdapter(adapter);
 
         FirebaseUser user = firebaseAuth.getCurrentUser();
-        System.out.println("Provider ID 5555555555555 : " + user.getUid());
 
         ImageView img = (ImageView)findViewById(R.id.test);
         Glide.with(this).load("https://firebasestorage.googleapis.com/v0/b/moviereviewer-34f20.appspot.com/o/image%2Fsuicide_squad_cover.jpg?alt=media&token=b8c806b4-fc56-4050-a13c-505a63c46985").into(img);
