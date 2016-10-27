@@ -9,8 +9,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.WindowManager;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.example.moviereviewer.R;
 import com.example.moviereviewer.adapter.MovieAdapter;
 import com.example.moviereviewer.model.Movie;
@@ -31,6 +33,7 @@ public class MainActivity extends AppCompatActivity{
     private List<Movie> movieList;
     private static String TAG = "MainActivity";
 
+
     //firebase auth object
     private FirebaseAuth firebaseAuth;
 
@@ -38,6 +41,7 @@ public class MainActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        final ImageView img = (ImageView)findViewById(R.id.test);
         firebaseAuth = FirebaseAuth.getInstance();
 
         //if the objects getcurrentuser method is not null
@@ -56,8 +60,7 @@ public class MainActivity extends AppCompatActivity{
         adapter = new MovieAdapter(movieList, this);
 
         recView.setAdapter(adapter);
-
-        final ImageView img = (ImageView)findViewById(R.id.test);
+        Glide.with(this).load("https://firebasestorage.googleapis.com/v0/b/moviereviewer-34f20.appspot.com/o/image%2Fdoctor_strange_cover.jpg?alt=media&token=8178412c-60d3-4a15-b716-c8580a5d8611").into(img);
         FirebaseDatabase.getInstance().getReference("movie-list").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
